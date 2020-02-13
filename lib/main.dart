@@ -46,7 +46,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -64,468 +63,387 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            RaisedButton(
-              child: Text('Applicant', 
-              style: TextStyle(fontSize: 20)),
-              onPressed: () {
-  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => SecondRoute()),
-  );
-}
+        child: Container(
+          color: Colors.blue,
+          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: <
+              Widget>[
+            Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  color: Colors.blueGrey,
+                  child: RaisedButton(
+                      child: Text('Applicant', style: TextStyle(fontSize: 20)),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SecondRoute()),
+                        );
+                      }),
+                ),
+                RaisedButton(
+                  child: Text('Company', style: TextStyle(fontSize: 20)),
+                ),
+              ],
             ),
-
-            RaisedButton(
-              child: Text('Company', 
-              style: TextStyle(fontSize: 20)),
-            ),
-          ],
+          ]),
         ),
       ),
     );
   }
 }
 
-
-
 class SecondRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var textStyle = DefaultTextStyle.of(context).style.apply(fontSizeFactor: 0.5,color: Colors.black);
-        var boxDecoration = InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.brown, width: 2.0),
-                        ),
-          );
-                return Scaffold(
-                  appBar: AppBar(
-                    title: Text("Second Route"),
-                  ),
-                  body: ListView(children: <Widget>[
-            
-                        SizedBox(height: 20),
-                    Row(children: <Widget>[
-                        Text('Name', style: textStyle),
-                    
-                    SizedBox(width: 20),
-                    
-        Container(              
-          width: 200.0, 
-          height: 40.0,
-          child: 
-                  TextFormField(
-                    
-                  decoration: boxDecoration,
-          validator: (value) {
-            if (value.isEmpty) {
-              return 'Please enter some text';
-            }
-            return null;
-          },
-          
-        )
-        
-),],
-        )
-      ,                         SizedBox(height: 20),
-                    Row(children: <Widget>[
-                        Text('Lastname', style: textStyle),
-                    
-                    SizedBox(width: 20),
-                    
-        Container(              
-          width: 200.0, 
-          height: 40.0,
-          child: 
-                  TextFormField(
-                    
-                  decoration: boxDecoration,
-          validator: (value) {
-            if (value.isEmpty) {
-              return 'Please enter some text';
-            }
-            return null;
-          },
-          
-        )
-        
-),],
-        ),
-                              SizedBox(height: 20),
-                    Column(children: <Widget>[
-                        Text('Tel.', style: textStyle),
-                    
-                    SizedBox(width: 20),
-                    
-        Container(              
-          width: 200.0, 
-          height: 40.0,
-          child: 
-                  TextFormField(
-                    
-                  decoration: boxDecoration,
-          validator: (value) {
-            if (value.isEmpty) {
-              return 'Please enter some text';
-            }
-            return null;
-          },
-          
-        )
-        
-),],
-        )
-                             ,SizedBox(height: 20),
-                    Row(children: <Widget>[
-                        Text('Address', style: textStyle),
-                    
-                    SizedBox(width: 20),
-                    
-        Container(              
-          width: 200.0, 
-          height: 40.0,
-          child: 
-                  TextFormField(
-                    
-                  decoration: boxDecoration,
-          validator: (value) {
-            if (value.isEmpty) {
-              return 'Please enter some text';
-            }
-            return null;
-          },
-          
-        )
-        
-),],
-        )
-      ,
-                              SizedBox(height: 20),
-                    Row(children: <Widget>[
-                        Text('Date of birth', style: textStyle),
-                    
-                    SizedBox(width: 20),
-                    
-        Container(              
-          width: 200.0, 
-          height: 40.0,
-          child: 
-                  TextFormField(
-                    
-                  decoration: boxDecoration,
-          validator: (value) {
-            if (value.isEmpty) {
-              return 'Please enter some text';
-            }
-            return null;
-          },
-          
-        )
-        
-),],
-        ),
-                              SizedBox(height: 20),
-                    Row(children: <Widget>[
-                        Text('E-mail', style: textStyle),
-                    
-                    SizedBox(width: 20),
-                    
-        Container(              
-          width: 200.0, 
-          height: 40.0,
-          child: 
-                  TextFormField(
-                    
-                  decoration: boxDecoration,
-          validator: (value) {
-            if (value.isEmpty) {
-              return 'Please enter some text';
-            }
-            return null;
-          },
-          
-        )
-        
-),],
-        ),
-                              SizedBox(height: 20),
-                    Row(children: <Widget>[
-                        Text('University', style: textStyle),
-                    
-                    SizedBox(width: 20),
-                    
-        Container(              
-          width: 200.0, 
-          height: 40.0,
-          child: 
-                  TextFormField(
-                    
-                  decoration: boxDecoration,
-          validator: (value) {
-            if (value.isEmpty) {
-              return 'Please enter some text';
-            }
-            return null;
-          },
-          
-        )
-        
-),],
-        ),
-                              SizedBox(height: 20),
-                    Row(children: <Widget>[
-                        Text('Faculty/Major', style: textStyle),
-                    
-                    SizedBox(width: 20),
-                    
-        Container(              
-          width: 200.0, 
-          height: 40.0,
-          child: 
-                  TextFormField(
-                    
-                  decoration: boxDecoration,
-          validator: (value) {
-            if (value.isEmpty) {
-              return 'Please enter some text';
-            }
-            return null;
-          },
-          
-        )
-        
-),],
-        ),
-                              SizedBox(height: 20),
-                    Row(children: <Widget>[
-                        Text('GPA', style: textStyle),
-                    
-                    SizedBox(width: 20),
-                    
-        Container(              
-          width: 200.0, 
-          height: 40.0,
-          child: 
-                  TextFormField(
-                    
-                  decoration: boxDecoration,
-          validator: (value) {
-            if (value.isEmpty) {
-              return 'Please enter some text';
-            }
-            return null;
-          },
-          
-        )
-        
-),],
-        ),
-                              SizedBox(height: 20),
-                    Row(children: <Widget>[
-                        Text('Transcript', style: textStyle),
-                    
-                    SizedBox(width: 20),
-                    
-        Container(              
-          width: 200.0, 
-          height: 40.0,
-          child: 
-                  TextFormField(
-                    
-                  decoration: boxDecoration,
-          validator: (value) {
-            if (value.isEmpty) {
-              return 'Please enter some text';
-            }
-            return null;
-          },
-          
-        )
-        
-),],
-        ),
-                              SizedBox(height: 20),
-                    Row(children: <Widget>[
-                        Text('Language', style: textStyle),
-                    
-                    SizedBox(width: 20),
-                    
-        Container(              
-          width: 200.0, 
-          height: 40.0,
-          child: 
-                  TextFormField(
-                    
-                  decoration: boxDecoration,
-          validator: (value) {
-            if (value.isEmpty) {
-              return 'Please enter some text';
-            }
-            return null;
-          },
-          
-        )
-        
-),],
-        ),
-                              SizedBox(height: 20),
-                    Row(children: <Widget>[
-                        Text('Computer skill', style: textStyle),
-                    
-                    SizedBox(width: 20),
-                    
-        Container(              
-          width: 200.0, 
-          height: 40.0,
-          child: 
-                  TextFormField(
-                    
-                  decoration: boxDecoration,
-          validator: (value) {
-            if (value.isEmpty) {
-              return 'Please enter some text';
-            }
-            return null;
-          },
-          
-        )
-        
-),],
-        ),
-                              SizedBox(height: 20),
-                    Row(children: <Widget>[
-                        Text('Softskill', style: textStyle),
-                    
-                    SizedBox(width: 20),
-                    
-        Container(              
-          width: 200.0, 
-          height: 40.0,
-          child: 
-                  TextFormField(
-                    
-                  decoration: boxDecoration,
-          validator: (value) {
-            if (value.isEmpty) {
-              return 'Please enter some text';
-            }
-            return null;
-          },
-          
-        )
-        
-),],
-        ),
-                              SizedBox(height: 20),
-                    Row(children: <Widget>[
-                        Text('Hardskill', style: textStyle),
-                    
-                    SizedBox(width: 20),
-                    
-        Container(              
-          width: 200.0, 
-          height: 40.0,
-          child: 
-                  TextFormField(
-                    
-                  decoration: boxDecoration,
-          validator: (value) {
-            if (value.isEmpty) {
-              return 'Please enter some text';
-            }
-            return null;
-          },
-          
-        )
-        
-),],
-        ),
-                              SizedBox(height: 20),
-                    Row(children: <Widget>[
-                        Text('Experience', style: textStyle),
-                    
-                    SizedBox(width: 20),
-                    
-        Container(              
-          width: 200.0, 
-          height: 40.0,
-          child: 
-                  TextFormField(
-                    
-                  decoration: boxDecoration,
-          validator: (value) {
-            if (value.isEmpty) {
-              return 'Please enter some text';
-            }
-            return null;
-          },
-          
-        )
-        
-),],
-        ),
-                              SizedBox(height: 20),
-                    Row(children: <Widget>[
-                        Text('Position', style: textStyle),
-                    
-                    SizedBox(width: 20),
-                    
-        Container(              
-          width: 200.0, 
-          height: 40.0,
-          child: 
-                  TextFormField(
-                    
-                  decoration: boxDecoration,
-          validator: (value) {
-            if (value.isEmpty) {
-              return 'Please enter some text';
-            }
-            return null;
-          },
-          
-        )
-        
-),],
-        ),
-                              SizedBox(height: 20),
-                    Row(children: <Widget>[
-                        Text('Salary', style: textStyle),
-                    
-                    SizedBox(width: 20),
-                    
-        Container(              
-          width: 200.0, 
-          height: 40.0,
-          child: 
-                  TextFormField(
-                    
-                  decoration: boxDecoration,
-          validator: (value) {
-            if (value.isEmpty) {
-              return 'Please enter some text';
-            }
-            return null;
-          },
-          
-        )
-        
-),],
-        ),
-                   RaisedButton(
-              child: Text('Applicant', 
-              style: TextStyle(fontSize: 20)),
-              onPressed: () {
-  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => AssesmentTest()),
-  );
-})],
-        
-      )
+    var textStyle = DefaultTextStyle.of(context)
+        .style
+        .apply(fontSizeFactor: 0.5, color: Colors.black);
+    var boxDecoration = InputDecoration(
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.brown, width: 2.0),
+      ),
     );
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Second Route"),
+        ),
+        body: ListView(
+          children: <Widget>[
+            SizedBox(height: 20),
+            Row(
+              children: <Widget>[
+                Text('Name', style: textStyle),
+                SizedBox(width: 20),
+                Container(
+                    width: 200.0,
+                    height: 40.0,
+                    child: TextFormField(
+                      decoration: boxDecoration,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                    )),
+              ],
+            ),
+            SizedBox(height: 20),
+            Row(
+              children: <Widget>[
+                Text('Lastname', style: textStyle),
+                SizedBox(width: 20),
+                Container(
+                    width: 200.0,
+                    height: 40.0,
+                    child: TextFormField(
+                      decoration: boxDecoration,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                    )),
+              ],
+            ),
+            SizedBox(height: 20),
+            Column(
+              children: <Widget>[
+                Text('Tel.', style: textStyle),
+                SizedBox(width: 20),
+                Container(
+                    width: 200.0,
+                    height: 40.0,
+                    child: TextFormField(
+                      decoration: boxDecoration,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                    )),
+              ],
+            ),
+            SizedBox(height: 20),
+            Row(
+              children: <Widget>[
+                Text('Address', style: textStyle),
+                SizedBox(width: 20),
+                Container(
+                    width: 200.0,
+                    height: 40.0,
+                    child: TextFormField(
+                      decoration: boxDecoration,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                    )),
+              ],
+            ),
+            SizedBox(height: 20),
+            Row(
+              children: <Widget>[
+                Text('Date of birth', style: textStyle),
+                SizedBox(width: 20),
+                Container(
+                    width: 200.0,
+                    height: 40.0,
+                    child: TextFormField(
+                      decoration: boxDecoration,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                    )),
+              ],
+            ),
+            SizedBox(height: 20),
+            Row(
+              children: <Widget>[
+                Text('E-mail', style: textStyle),
+                SizedBox(width: 20),
+                Container(
+                    width: 200.0,
+                    height: 40.0,
+                    child: TextFormField(
+                      decoration: boxDecoration,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                    )),
+              ],
+            ),
+            SizedBox(height: 20),
+            Row(
+              children: <Widget>[
+                Text('University', style: textStyle),
+                SizedBox(width: 20),
+                Container(
+                    width: 200.0,
+                    height: 40.0,
+                    child: TextFormField(
+                      decoration: boxDecoration,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                    )),
+              ],
+            ),
+            SizedBox(height: 20),
+            Row(
+              children: <Widget>[
+                Text('Faculty/Major', style: textStyle),
+                SizedBox(width: 20),
+                Container(
+                    width: 200.0,
+                    height: 40.0,
+                    child: TextFormField(
+                      decoration: boxDecoration,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                    )),
+              ],
+            ),
+            SizedBox(height: 20),
+            Row(
+              children: <Widget>[
+                Text('GPA', style: textStyle),
+                SizedBox(width: 20),
+                Container(
+                    width: 200.0,
+                    height: 40.0,
+                    child: TextFormField(
+                      decoration: boxDecoration,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                    )),
+              ],
+            ),
+            SizedBox(height: 20),
+            Row(
+              children: <Widget>[
+                Text('Transcript', style: textStyle),
+                SizedBox(width: 20),
+                Container(
+                    width: 200.0,
+                    height: 40.0,
+                    child: TextFormField(
+                      decoration: boxDecoration,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                    )),
+              ],
+            ),
+            SizedBox(height: 20),
+            Row(
+              children: <Widget>[
+                Text('Language', style: textStyle),
+                SizedBox(width: 20),
+                Container(
+                    width: 200.0,
+                    height: 40.0,
+                    child: TextFormField(
+                      decoration: boxDecoration,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                    )),
+              ],
+            ),
+            SizedBox(height: 20),
+            Row(
+              children: <Widget>[
+                Text('Computer skill', style: textStyle),
+                SizedBox(width: 20),
+                Container(
+                    width: 200.0,
+                    height: 40.0,
+                    child: TextFormField(
+                      decoration: boxDecoration,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                    )),
+              ],
+            ),
+            SizedBox(height: 20),
+            Row(
+              children: <Widget>[
+                Text('Softskill', style: textStyle),
+                SizedBox(width: 20),
+                Container(
+                    width: 200.0,
+                    height: 40.0,
+                    child: TextFormField(
+                      decoration: boxDecoration,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                    )),
+              ],
+            ),
+            SizedBox(height: 20),
+            Row(
+              children: <Widget>[
+                Text('Hardskill', style: textStyle),
+                SizedBox(width: 20),
+                Container(
+                    width: 200.0,
+                    height: 40.0,
+                    child: TextFormField(
+                      decoration: boxDecoration,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                    )),
+              ],
+            ),
+            SizedBox(height: 20),
+            Row(
+              children: <Widget>[
+                Text('Experience', style: textStyle),
+                SizedBox(width: 20),
+                Container(
+                    width: 200.0,
+                    height: 40.0,
+                    child: TextFormField(
+                      decoration: boxDecoration,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                    )),
+              ],
+            ),
+            SizedBox(height: 20),
+            Row(
+              children: <Widget>[
+                Text('Position', style: textStyle),
+                SizedBox(width: 20),
+                Container(
+                    width: 200.0,
+                    height: 40.0,
+                    child: TextFormField(
+                      decoration: boxDecoration,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                    )),
+              ],
+            ),
+            SizedBox(height: 20),
+            Row(
+              children: <Widget>[
+                Text('Salary', style: textStyle),
+                SizedBox(width: 20),
+                Container(
+                    width: 200.0,
+                    height: 40.0,
+                    child: TextFormField(
+                      decoration: boxDecoration,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                    )),
+              ],
+            ),
+            RaisedButton(
+                child: Text('Applicant', style: TextStyle(fontSize: 20)),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AssesmentTest()),
+                  );
+                })
+          ],
+        ));
   }
 }
