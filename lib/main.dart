@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'pages/assesmentTest.dart';
 import 'pages/registerForm.dart';
 
 void main() => runApp(MyApp());

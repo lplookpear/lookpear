@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../constants.dart' as Constants;
 
 class AssesmentTest extends StatefulWidget {
   @override
@@ -6,26 +7,8 @@ class AssesmentTest extends StatefulWidget {
 }
 
 class _AssesmentTestState extends State<AssesmentTest> {
-  Map<int, QuestionData> _questionData = {
-    1: QuestionData(question: 'AAAAAAAAAA', choise: {
-      'A': 'answer A',
-      'B': 'answer B',
-      'C': 'answer C',
-      'D': 'answer D',
-    }),
-    2: QuestionData(question: 'BBBBBBBB', choise: {
-      'A': 'answer A',
-      'B': 'answer B',
-      'C': 'answer C',
-      'D': 'answer D',
-    }),
-    3: QuestionData(question: 'CCCCCCCC', choise: {
-      'A': 'answer A',
-      'B': 'answer B',
-      'C': 'answer C',
-      'D': 'answer D',
-    })
-  };
+  
+  Map<int, QuestionData> _questionData = Constants.questionList;
   var _answer = {1: '', 2: '', 3: ''};
   var _questionNumber = 1;
   static var _lastQuestion;
