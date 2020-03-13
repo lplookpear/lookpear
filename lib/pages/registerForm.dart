@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'assesmentTest.dart';
 
-class RegisterForm extends StatelessWidget {
+class RegisterForm extends StatefulWidget {
+  @override
+  _RegisterFormState createState() => _RegisterFormState();
+}
+
+class _RegisterFormState extends State<RegisterForm> {
   var textStyle = TextStyle(fontSize: 20);
   var boxDecoration = InputDecoration(
     enabledBorder: OutlineInputBorder(
