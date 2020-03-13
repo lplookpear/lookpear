@@ -2,17 +2,21 @@ import 'package:flutter/material.dart';
 import '../constants.dart' as Constants;
 
 class AssesmentTest extends StatefulWidget {
+  AssesmentTest({this.position});
+  final String position;
   @override
-  _AssesmentTestState createState() => _AssesmentTestState();
+  _AssesmentTestState createState() => _AssesmentTestState(position);
 }
 
 class _AssesmentTestState extends State<AssesmentTest> {
-  
-  Map<int, QuestionData> _questionData = Constants.questionList;
   var _answer = {1: '', 2: '', 3: ''};
   var _questionNumber = 1;
   static var _lastQuestion;
-  _AssesmentTestState() {
+  final String position;
+  Map<int, QuestionData> _questionData;
+  _AssesmentTestState(this.position) {
+    var tmp = Constants.questionList[position];
+    _questionData = tmp;
     _lastQuestion = _questionData.keys.length;
   }
 
@@ -78,20 +82,20 @@ class _AssesmentTestState extends State<AssesmentTest> {
             1 != _questionNumber
                 ? OutlineButton(
                     child: Text('Back'),
-                    onPressed: () => {
+                    onPressed: () {
                       setState(() {
                         _questionNumber--;
-                      })
+                      });
                     },
                   )
                 : SizedBox(),
             _lastQuestion != _questionNumber
                 ? OutlineButton(
                     child: Text('Next'),
-                    onPressed: () => {
+                    onPressed: () {
                       setState(() {
                         _questionNumber++;
-                      })
+                      });
                     },
                   )
                 : SizedBox(),
