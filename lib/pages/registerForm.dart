@@ -26,12 +26,14 @@ class _RegisterFormState extends State<RegisterForm> {
   ];
   String _selectedPosition;
   String _selectedCompany;
-  Map<String, String> info;
+  Map<String, String> info = Map<String, String>();
 
   File image;
   final _formKey = GlobalKey<FormState>();
-  final _formKey2 = GlobalKey<FormState>();
-  Map<String, TextEditingController> controllers;
+  File transcript;
+
+  Map<String, TextEditingController> controllers =
+      new Map<String, TextEditingController>();
 
   @override
   Widget build(BuildContext context) {
@@ -59,15 +61,15 @@ class _RegisterFormState extends State<RegisterForm> {
                     child: TextFormField(
                       controller: controller,
                       decoration: boxDecoration,
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
-                      onSaved: (value) {
-                        info[label] = value;
-                      },
+                      // validator: (value) {
+                      //   if (value.isEmpty) {
+                      //     return 'Please enter some text';
+                      //   }
+                      //   return null;
+                      // },
+                      // onSaved: (value) {
+                      //   info[label] = value;
+                      // },
                     )),
               ],
             ),
@@ -81,6 +83,14 @@ class _RegisterFormState extends State<RegisterForm> {
 
       setState(() {
         this.image = image;
+      });
+    }
+
+    Future getTranscript() async {
+      var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+      setState(() {
+        this.transcript = image;
       });
     }
 
@@ -103,6 +113,12 @@ class _RegisterFormState extends State<RegisterForm> {
             backgroundImage: ExactAssetImage(image.path),
           ));
 
+    Widget AttachText() {
+      return transcript != null
+          ? Text('Attached', style: textStyle)
+          : Text("Transcript", style: textStyle);
+    }
+
     return Scaffold(
         body: Container(
             color: Colors.teal[50],
@@ -114,7 +130,6 @@ class _RegisterFormState extends State<RegisterForm> {
                 SizedBox(height: 20),
                 Container(
                     child: Form(
-                        // key: _formKey,
                         child: Column(children: <Widget>[
                   textFormField('Name'),
                   SizedBox(height: 20),
@@ -130,16 +145,9 @@ class _RegisterFormState extends State<RegisterForm> {
                   SizedBox(height: 20),
                   textFormField('University'),
                   SizedBox(height: 20),
-                ]))),
-                Container(
-                    child: Form(
-                        // key: _formKey2,
-                        child: Column(children: <Widget>[
                   textFormField('Faculty/Major'),
                   SizedBox(height: 20),
                   textFormField('GPA'),
-                  SizedBox(height: 20),
-                  textFormField('Transcript'),
                   SizedBox(height: 20),
                   textFormField('Language'),
                   SizedBox(height: 20),
@@ -152,6 +160,20 @@ class _RegisterFormState extends State<RegisterForm> {
                   textFormField('Experience'),
                   SizedBox(height: 20),
                   textFormField('Salary'),
+                  SizedBox(height: 20),
+                  Row(
+                    children: <Widget>[
+                      RaisedButton(
+                        child: Text('Attach here'),
+                        onPressed: () => getTranscript(),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      AttachText()
+                    ],
+                  ),
+                  SizedBox(height: 20),
                 ]))),
                 new DropdownButton(
                   items: _companys.map((String companyName) {
@@ -187,16 +209,18 @@ class _RegisterFormState extends State<RegisterForm> {
                 RaisedButton(
                     child: Text('Submit', style: TextStyle(fontSize: 20)),
                     onPressed: () {
-                      // if (_formKey.currentState.validate() &&
-                      //     _formKey2.currentState.validate()) {
-                      //   _formKey.currentState.save();
-                      //   _formKey2.currentState.save();
-                      print(controllers);
+                      controllers.forEach((label, controller) {
+                        info[label] = controller.text;
+                      });
+
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                AssesmentTest(position: _selectedPosition)),
+                            builder: (context) => AssesmentTest(
+                                position: _selectedPosition,
+                                info: info,
+                                image: image,
+                                transcript: transcript)),
                       );
                       // }
                     })
