@@ -19,7 +19,7 @@ class AssesmentTest extends StatefulWidget {
 }
 
 class _AssesmentTestState extends State<AssesmentTest> {
-  var _answer = {1: '', 2: '', 3: ''};
+  var _answer = {'1': '', '2': '', '3': ''};
   var _questionNumber = 1;
   static var _lastQuestion;
   final String position;
@@ -45,14 +45,17 @@ class _AssesmentTestState extends State<AssesmentTest> {
     final FirebaseStorage storage = FirebaseStorage(
         app: app, storageBucket: 'gs://senior-project-b93f1.appspot.com');
     final FirebaseDatabase database = FirebaseDatabase(app: app);
-    DatabaseReference _messagesRef = database.reference().child('messages');
+    DatabaseReference _messagesRef =
+        database.reference().child(info['Company']);
+    await _messagesRef.push().set({'info': info, 'answer': _answer});
     final StorageReference storageReference =
-        storage.ref().child('test').child('profile');
-    // info['Name'] + info['Lastname']
+        storage.ref().child(info['Name'] + info['Lastname']).child('profile');
     StorageUploadTask uploadTask = storageReference.putFile(image);
     await uploadTask.onComplete;
-    final StorageReference storageReferenceTs =
-        storage.ref().child('test').child('transcript');
+    final StorageReference storageReferenceTs = storage
+        .ref()
+        .child(info['Name'] + info['Lastname'])
+        .child('transcript');
     StorageUploadTask uploadTaskTs = storageReferenceTs.putFile(transcript);
     await uploadTaskTs.onComplete;
   }
@@ -72,40 +75,40 @@ class _AssesmentTestState extends State<AssesmentTest> {
             RadioListTile(
               title: Text('$choiseA'),
               value: 'A',
-              groupValue: _answer[questionNumber],
+              groupValue: _answer[questionNumber.toString()],
               onChanged: (value) {
                 setState(() {
-                  _answer[questionNumber] = value;
+                  _answer[questionNumber.toString()] = value;
                 });
               },
             ),
             RadioListTile(
               title: Text('$choiseB'),
               value: 'B',
-              groupValue: _answer[questionNumber],
+              groupValue: _answer[questionNumber.toString()],
               onChanged: (value) {
                 setState(() {
-                  _answer[questionNumber] = value;
+                  _answer[questionNumber.toString()] = value;
                 });
               },
             ),
             RadioListTile(
               title: Text('$choiseC'),
               value: 'C',
-              groupValue: _answer[questionNumber],
+              groupValue: _answer[questionNumber.toString()],
               onChanged: (value) {
                 setState(() {
-                  _answer[questionNumber] = value;
+                  _answer[questionNumber.toString()] = value;
                 });
               },
             ),
             RadioListTile(
               title: Text('$choiseD'),
               value: 'D',
-              groupValue: _answer[questionNumber],
+              groupValue: _answer[questionNumber.toString()],
               onChanged: (value) {
                 setState(() {
-                  _answer[questionNumber] = value;
+                  _answer[questionNumber.toString()] = value;
                 });
               },
             ),

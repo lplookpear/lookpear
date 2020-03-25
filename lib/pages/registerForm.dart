@@ -223,6 +223,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     child: Text('Submit', style: TextStyle(fontSize: 20)),
                     onPressed: () {
                       bool isPass = true;
+                      info = Map<String, String>();
                       controllers.forEach((label, controller) {
                         if (controller.text.isEmpty) {
                           isPass = false;
@@ -230,10 +231,17 @@ class _RegisterFormState extends State<RegisterForm> {
                             _isSubmit = true;
                           });
                         }
-                        info[label] = controller.text;
+                        if (label == 'Faculty/Major') {
+                          info['Major'] = controller.text;
+                        } else if (label == 'Tel.') {
+                          info['Tel'] = controller.text;
+                        } else {
+                          info[label] = controller.text;
+                        }
                       });
 
                       if (isPass) {
+                        info['Company'] = _selectedCompany;
                         Navigator.push(
                           context,
                           MaterialPageRoute(
