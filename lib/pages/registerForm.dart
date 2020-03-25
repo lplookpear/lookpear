@@ -17,6 +17,12 @@ class _RegisterFormState extends State<RegisterForm> {
       borderSide: BorderSide(color: Colors.brown, width: 2.0),
     ),
   );
+  var boxErrorDecoration = InputDecoration(
+    enabledBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.brown, width: 2.0),
+    ),
+    errorText: 'Please enter some text',
+  );
   var _companys = ['Honda', 'Nissan', 'Toyota'];
   var _position = [
     'Electrical engineer',
@@ -31,15 +37,18 @@ class _RegisterFormState extends State<RegisterForm> {
   File image;
   final _formKey = GlobalKey<FormState>();
   File transcript;
-
   Map<String, TextEditingController> controllers =
       new Map<String, TextEditingController>();
+  bool _isSubmit = false;
 
   @override
   Widget build(BuildContext context) {
     Widget textFormField(String label) {
-      var controller = new TextEditingController();
-      controllers[label] = controller;
+      if (controllers[label] == null) {
+        var controller = new TextEditingController();
+        controllers[label] = controller;
+      }
+      var controller = controllers[label];
       return Container(
         // padding: EdgeInsets.only(right: 20, left: 20),
         child: Row(
@@ -60,7 +69,12 @@ class _RegisterFormState extends State<RegisterForm> {
                     height: 40.0,
                     child: TextFormField(
                       controller: controller,
-                      decoration: boxDecoration,
+                      decoration: controller.text == "" && _isSubmit
+                          ? boxErrorDecoration
+                          : boxDecoration,
+                      onFieldSubmitted: (value) {
+                        controller.text = value;
+                      },
                       // validator: (value) {
                       //   if (value.isEmpty) {
                       //     return 'Please enter some text';
@@ -129,8 +143,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 profilePicture,
                 SizedBox(height: 20),
                 Container(
-                    child: Form(
-                        child: Column(children: <Widget>[
+                    child: Column(children: <Widget>[
                   textFormField('Name'),
                   SizedBox(height: 20),
                   textFormField('Lastname'),
@@ -174,7 +187,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     ],
                   ),
                   SizedBox(height: 20),
-                ]))),
+                ])),
                 new DropdownButton(
                   items: _companys.map((String companyName) {
                     return new DropdownMenuItem(
@@ -209,20 +222,28 @@ class _RegisterFormState extends State<RegisterForm> {
                 RaisedButton(
                     child: Text('Submit', style: TextStyle(fontSize: 20)),
                     onPressed: () {
+                      bool isPass = true;
                       controllers.forEach((label, controller) {
+                        if (controller.text.isEmpty) {
+                          isPass = false;
+                          setState(() {
+                            _isSubmit = true;
+                          });
+                        }
                         info[label] = controller.text;
                       });
 
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => AssesmentTest(
-                                position: _selectedPosition,
-                                info: info,
-                                image: image,
-                                transcript: transcript)),
-                      );
-                      // }
+                      if (isPass) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AssesmentTest(
+                                  position: _selectedPosition,
+                                  info: info,
+                                  image: image,
+                                  transcript: transcript)),
+                        );
+                      }
                     })
               ],
             )));
