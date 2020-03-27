@@ -26,9 +26,9 @@ class _RegisterFormState extends State<RegisterForm> {
   var _companys = ['Honda', 'Nissan', 'Toyota'];
   var _position = [
     'Electrical engineer',
-    'Mechanical engineer',
-    'Suspension and brake technicain',
-    'Engine technician'
+    'Suspension and steering',
+    'Engine repair',
+    'Technician'
   ];
   String _selectedPosition;
   String _selectedCompany;

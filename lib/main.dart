@@ -1,3 +1,4 @@
+import 'package:final_project/pages/CompanyLogin.dart';
 import 'package:flutter/material.dart';
 import 'pages/registerForm.dart';
 
@@ -97,12 +98,17 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Column(children: [
                 SizedBox(height: 45),
                 RaisedButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15)),
-                  child: Text('Company', style: TextStyle(fontSize: 20)),
-                  padding:
-                      EdgeInsets.only(top: 15, bottom: 15, right: 30, left: 30),
-                ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    child: Text('Company', style: TextStyle(fontSize: 20)),
+                    padding: EdgeInsets.only(
+                        top: 15, bottom: 15, right: 30, left: 30),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CompanyLogin()),
+                      );
+                    }),
                 SizedBox(height: 30),
                 Image.asset(
                   "images/IMG_1857.PNG",

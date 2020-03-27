@@ -71,7 +71,7 @@ class _AssesmentTestState extends State<AssesmentTest> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('$title'),
+            Text('$title', style: TextStyle(fontSize: 17)),
             RadioListTile(
               title: Text('$choiseA'),
               value: 'A',
