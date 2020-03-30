@@ -9,7 +9,7 @@ class CompanyLogin extends StatefulWidget {
 }
 
 class _CompanyLoginState extends State<CompanyLogin> {
-  Future login(String user, String pwd) async {
+  Future login(String username, String pwd) async {
     final FirebaseApp app = await FirebaseApp.configure(
       name: 'test',
       options: FirebaseOptions(
@@ -21,7 +21,7 @@ class _CompanyLoginState extends State<CompanyLogin> {
     );
 
     final FirebaseDatabase database = FirebaseDatabase(app: app);
-    var userRef = database.reference().child('User').child(user);
+    var userRef = database.reference().child('User').child(username);
     var userFound = await userRef.once().then((value) => value.value);
     if (userFound != null) {
       var pass = userFound['Password'];
@@ -57,40 +57,88 @@ class _CompanyLoginState extends State<CompanyLogin> {
     );
   }
 
+  var controllerUsername = new TextEditingController();
+  var controllerPassword = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+        body: Stack(children: <Widget>[
+      Container(
+        color: Colors.pink[50],
+        child: Center(
           child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Username',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(width: 20),
+                  Container(
+                      width: MediaQuery.of(context).size.width - 200,
+                      height: 40.0,
+                      child: TextField(controller: controllerUsername))
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Password',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(width: 20),
+                  Container(
+                      width: MediaQuery.of(context).size.width - 200,
+                      height: 40.0,
+                      child: TextField(
+                        controller: controllerPassword,
+                        obscureText: true,
+                      ))
+                ],
+              ),
+              SizedBox(height: 20),
+              RaisedButton(
+                child: Text('Login', style: TextStyle(fontSize: 20)),
+                onPressed: () {
+                  login(controllerUsername.text, controllerPassword.text);
+                },
+              ),
+              SizedBox(height: 100)
+            ],
+          ),
+        ),
+      ),
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
+          SizedBox(height: 60),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text('Username'),
-              Container(
-                  width: MediaQuery.of(context).size.width - 100,
-                  height: 40.0,
-                  child: TextField())
+              Text(
+                'Company login',
+                style: TextStyle(
+                    fontSize: 45,
+                    color: Colors.brown,
+                    fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
             ],
-          ),
-          Row(
-            children: <Widget>[
-              Text('Password'),
-              Container(
-                  width: MediaQuery.of(context).size.width - 100,
-                  height: 40.0,
-                  child: TextField())
-            ],
-          ),
-          RaisedButton(
-            child: Text('Login'),
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Successful()));
-            },
           )
         ],
-      )),
-    );
+      ),
+      Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+        Image.asset(
+          "images/building.PNG",
+          //width: 100, height:100
+        )
+      ])
+    ]));
   }
 }
