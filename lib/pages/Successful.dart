@@ -1,3 +1,4 @@
+import 'package:final_project/pages/registerForm.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -13,7 +14,7 @@ class _SuccessfulState extends State<Successful> {
       'Answer': {'1': 'a'},
       'Info': {
         'Name': 'SAMSAK',
-        'Lastname ': 'SUMSUM',
+        'Lastname': 'SUMSUM',
         'Email': 'erefef@test.com',
         'Tel': '0987654321'
       }
@@ -22,21 +23,54 @@ class _SuccessfulState extends State<Successful> {
       'Answer': {'1': 'a'},
       'Info': {
         'Name': 'SOMCHAI',
-        'Lastname ': 'SOOM',
+        'Lastname': 'SOOM',
         'Email': 'erefef@mail.com',
         'Tel': '0987654321'
       }
     }
   };
 
+  void showDetail(Map<String, String> info) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => RegisterForm(
+                  info: info,
+                )));
+  }
+
   List<TableRow> tableRowBuilder() {
     List<TableRow> rows = new List<TableRow>();
     for (var key in data.keys) {
-      rows.add(TableRow(children: [
-        Text(data[key]['Info']['Name']),
-        Text(data[key]['Info']['Tel']),
-        Text(data[key]['Info']['Email']),
-      ]));
+      String name = data[key]['Info']['Name'];
+      String lname = data[key]['Info']['Lastname'];
+      Map<String, String> info = data[key]['Info'];
+      rows.add(TableRow(
+        children: [
+          GestureDetector(
+            child: Container(
+              child: Text('$name $lname'),
+            ),
+            onTap: () {
+              showDetail(info);
+            },
+          ),
+          GestureDetector(
+            child: Container(child: Text(data[key]['Info']['Tel'])),
+            onTap: () {
+              showDetail(info);
+            },
+          ),
+          GestureDetector(
+            child: Container(
+              child: Text(data[key]['Info']['Email']),
+            ),
+            onTap: () {
+              showDetail(info);
+            },
+          )
+        ],
+      ));
     }
     return rows;
   }

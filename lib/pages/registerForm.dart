@@ -6,11 +6,15 @@ import 'assesmentTest.dart';
 import 'package:image_picker/image_picker.dart';
 
 class RegisterForm extends StatefulWidget {
+  Map<String, String> info;
+  RegisterForm([this.info = null]);
   @override
-  _RegisterFormState createState() => _RegisterFormState();
+  _RegisterFormState createState() => _RegisterFormState(info);
 }
 
 class _RegisterFormState extends State<RegisterForm> {
+  Map<String, String> info;
+  _RegisterFormState(this.info);
   var textStyle = TextStyle(fontSize: 20);
   var boxDecoration = InputDecoration(
     enabledBorder: OutlineInputBorder(
