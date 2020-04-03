@@ -63,82 +63,87 @@ class _CompanyLoginState extends State<CompanyLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Stack(children: <Widget>[
-      Container(
-        color: Colors.pink[50],
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          Container(
+            color: Colors.pink[50],
+            child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+              Image.asset(
+                "images/building.PNG",
+                //width: 100, height:100
+              )
+            ]),
+          ),
+          Container(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'Username',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(width: 20),
+                      Container(
+                          width: MediaQuery.of(context).size.width - 200,
+                          height: 40.0,
+                          child: TextField(controller: controllerUsername))
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'Password',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(width: 20),
+                      Container(
+                          width: MediaQuery.of(context).size.width - 200,
+                          height: 40.0,
+                          child: TextField(
+                            controller: controllerPassword,
+                            obscureText: true,
+                          ))
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  RaisedButton(
+                    child: Text('Login', style: TextStyle(fontSize: 20)),
+                    onPressed: () {
+                      login(controllerUsername.text, controllerPassword.text);
+                    },
+                  ),
+                  SizedBox(height: 100)
+                ],
+              ),
+            ),
+          ),
+          Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              SizedBox(height: 60),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    'Username',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    'Company login',
+                    style: TextStyle(
+                        fontSize: 45,
+                        color: Colors.brown,
+                        fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
                   ),
-                  SizedBox(width: 20),
-                  Container(
-                      width: MediaQuery.of(context).size.width - 200,
-                      height: 40.0,
-                      child: TextField(controller: controllerUsername))
                 ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'Password',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(width: 20),
-                  Container(
-                      width: MediaQuery.of(context).size.width - 200,
-                      height: 40.0,
-                      child: TextField(
-                        controller: controllerPassword,
-                        obscureText: true,
-                      ))
-                ],
-              ),
-              SizedBox(height: 20),
-              RaisedButton(
-                child: Text('Login', style: TextStyle(fontSize: 20)),
-                onPressed: () {
-                  login(controllerUsername.text, controllerPassword.text);
-                },
-              ),
-              SizedBox(height: 100)
+              )
             ],
           ),
-        ),
-      ),
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          SizedBox(height: 60),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'Company login',
-                style: TextStyle(
-                    fontSize: 45,
-                    color: Colors.brown,
-                    fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          )
-        ],
-      ),
-      Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-        Image.asset(
-          "images/building.PNG",
-          //width: 100, height:100
-        )
-      ])
-    ]));
+        ]));
   }
 }
