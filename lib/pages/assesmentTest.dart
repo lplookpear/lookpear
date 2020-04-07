@@ -19,7 +19,7 @@ class AssesmentTest extends StatefulWidget {
 }
 
 class _AssesmentTestState extends State<AssesmentTest> {
-  var _answer = {'1': '', '2': '', '3': ''};
+  Map<String, String> _answer = new Map<String, String>();
   var _questionNumber = 1;
   static var _lastQuestion;
   final String position;

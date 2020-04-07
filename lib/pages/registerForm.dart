@@ -1,20 +1,27 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-
 import 'assesmentTest.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class RegisterForm extends StatefulWidget {
   Map<String, String> info;
-  RegisterForm([this.info = null]);
+  RegisterForm({this.info = null});
   @override
   _RegisterFormState createState() => _RegisterFormState(info);
 }
 
 class _RegisterFormState extends State<RegisterForm> {
-  Map<String, String> info;
-  _RegisterFormState(this.info);
+  _RegisterFormState(info) {
+    if (info != null) {
+      this.info = info;
+      this.isDetail = true;
+    }
+  }
+  bool isDetail = false;
+  String urlProfileImage = '';
+  String urlTrans = '';
   var textStyle = TextStyle(fontSize: 20);
   var boxDecoration = InputDecoration(
     enabledBorder: OutlineInputBorder(
@@ -37,7 +44,6 @@ class _RegisterFormState extends State<RegisterForm> {
   String _selectedPosition;
   String _selectedCompany;
   Map<String, String> info = Map<String, String>();
-
   File image;
   final _formKey = GlobalKey<FormState>();
   File transcript;
@@ -45,11 +51,48 @@ class _RegisterFormState extends State<RegisterForm> {
       new Map<String, TextEditingController>();
   bool _isSubmit = false;
 
+  void getProfile() async {
+    final FirebaseApp app = await FirebaseApp.configure(
+      name: 'test',
+      options: FirebaseOptions(
+          googleAppID: '1:219065956997:android:abebdc4572ab97fe0547ec',
+          gcmSenderID: '219065956997',
+          apiKey: 'AIzaSyA8W2yxV_GI89UxvfwCX7fboFmc9Xf_v3k',
+          projectID: 'senior-project-b93f1',
+          databaseURL: 'https://senior-project-b93f1.firebaseio.com/'),
+    );
+
+    final FirebaseStorage storage = FirebaseStorage(
+        app: app, storageBucket: 'gs://senior-project-b93f1.appspot.com');
+    final StorageReference storageReference =
+        storage.ref().child(info['Name'] + info['Lastname']).child('profile');
+    urlProfileImage = await storageReference.getDownloadURL();
+
+    final StorageReference storageReferenceTs = storage
+        .ref()
+        .child(info['Name'] + info['Lastname'])
+        .child('transcript');
+
+    urlTrans = await storageReferenceTs.getDownloadURL();
+  }
+
+  String getInfo(String label) {
+    if (label == 'Faculty/Major') {
+      return info['Major'];
+    } else if (label == 'Tel.') {
+      return info['Tel'];
+    } else {
+      return info[label];
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget textFormField(String label) {
+      bool haveValue = false;
       if (controllers[label] == null) {
-        var controller = new TextEditingController();
+        haveValue = getInfo(label) != null ? true : false;
+        var controller = new TextEditingController(text: getInfo(label));
         controllers[label] = controller;
       }
       var controller = controllers[label];
@@ -72,6 +115,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     width: MediaQuery.of(context).size.width - 40,
                     height: 40.0,
                     child: TextFormField(
+                      enabled: !haveValue,
                       controller: controller,
                       decoration: controller.text == "" && _isSubmit
                           ? boxErrorDecoration
@@ -120,7 +164,7 @@ class _RegisterFormState extends State<RegisterForm> {
               child: IconButton(
                 icon: Icon(Icons.perm_identity),
                 iconSize: 100,
-                onPressed: () => getImage(),
+                onPressed: isDetail ? null : () => getImage(),
               ),
             ),
           )
@@ -128,7 +172,9 @@ class _RegisterFormState extends State<RegisterForm> {
             child: CircleAvatar(
             maxRadius: 100,
             minRadius: 100,
-            backgroundImage: ExactAssetImage(image.path),
+            backgroundImage: isDetail
+                ? Image.network(urlProfileImage)
+                : ExactAssetImage(image.path),
           ));
 
     Widget AttachText() {
@@ -182,7 +228,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     children: <Widget>[
                       RaisedButton(
                         child: Text('Attach here'),
-                        onPressed: () => getTranscript(),
+                        onPressed: isDetail ? null : () => getTranscript(),
                       ),
                       SizedBox(
                         width: 20,
