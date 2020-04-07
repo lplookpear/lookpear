@@ -15,7 +15,7 @@ class _SuccessfulState extends State<Successful> {
       'Info': {
         'Name': 'SAMSAK',
         'Lastname': 'SUMSUM',
-        'Email': 'erefef@test.com',
+        'E-mail': 'erefef@test.com',
         'Tel': '0987654321'
       }
     },
@@ -24,7 +24,7 @@ class _SuccessfulState extends State<Successful> {
       'Info': {
         'Name': 'SOMCHAI',
         'Lastname': 'SOOM',
-        'Email': 'erefef@mail.com',
+        'E-mail': 'erefef@mail.com',
         'Tel': '0987654321'
       }
     }
@@ -63,7 +63,7 @@ class _SuccessfulState extends State<Successful> {
           ),
           GestureDetector(
             child: Container(
-              child: Text(data[key]['Info']['Email']),
+              child: Text(data[key]['Info']['E-mail']),
             ),
             onTap: () {
               showDetail(info);

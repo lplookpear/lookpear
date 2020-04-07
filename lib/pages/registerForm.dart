@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_mailer/flutter_mailer.dart';
 import 'assesmentTest.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -227,82 +228,106 @@ class _RegisterFormState extends State<RegisterForm> {
                   Row(
                     children: <Widget>[
                       RaisedButton(
-                        child: Text('Attach here'),
+                        child:
+                            isDetail ? Text('Transcript') : Text('Attach here'),
                         onPressed: isDetail ? null : () => getTranscript(),
                       ),
                       SizedBox(
                         width: 20,
                       ),
-                      AttachText()
+                      isDetail ? SizedBox() : AttachText()
                     ],
                   ),
                   SizedBox(height: 20),
                 ])),
-                new DropdownButton(
-                  items: _companys.map((String companyName) {
-                    return new DropdownMenuItem(
-                      value: companyName,
-                      child: new Text(companyName),
-                    );
-                  }).toList(),
-                  hint: Text('Select company'),
-                  value: _selectedCompany,
-                  onChanged: (newValue) {
-                    setState(() {
-                      _selectedCompany = newValue;
-                    });
-                  },
-                ),
-                SizedBox(height: 20),
-                new DropdownButton(
-                  items: _position.map((String position) {
-                    return new DropdownMenuItem(
-                      value: position,
-                      child: new Text(position),
-                    );
-                  }).toList(),
-                  hint: Text('Select position'),
-                  value: _selectedPosition,
-                  onChanged: (newValue) {
-                    setState(() {
-                      _selectedPosition = newValue;
-                    });
-                  },
-                ),
-                RaisedButton(
-                    child: Text('Submit', style: TextStyle(fontSize: 20)),
-                    onPressed: () {
-                      bool isPass = true;
-                      info = Map<String, String>();
-                      controllers.forEach((label, controller) {
-                        if (controller.text.isEmpty) {
-                          isPass = false;
+                isDetail
+                    ? SizedBox()
+                    : new DropdownButton(
+                        items: _companys.map((String companyName) {
+                          return new DropdownMenuItem(
+                            value: companyName,
+                            child: new Text(companyName),
+                          );
+                        }).toList(),
+                        hint: Text('Select company'),
+                        value: _selectedCompany,
+                        onChanged: (newValue) {
                           setState(() {
-                            _isSubmit = true;
+                            _selectedCompany = newValue;
                           });
-                        }
-                        if (label == 'Faculty/Major') {
-                          info['Major'] = controller.text;
-                        } else if (label == 'Tel.') {
-                          info['Tel'] = controller.text;
-                        } else {
-                          info[label] = controller.text;
-                        }
-                      });
+                        },
+                      ),
+                SizedBox(height: 20),
+                isDetail
+                    ? SizedBox()
+                    : new DropdownButton(
+                        items: _position.map((String position) {
+                          return new DropdownMenuItem(
+                            value: position,
+                            child: new Text(position),
+                          );
+                        }).toList(),
+                        hint: Text('Select position'),
+                        value: _selectedPosition,
+                        onChanged: (newValue) {
+                          setState(() {
+                            _selectedPosition = newValue;
+                          });
+                        },
+                      ),
+                isDetail
+                    ? SizedBox()
+                    : RaisedButton(
+                        child: Text('Submit', style: TextStyle(fontSize: 20)),
+                        onPressed: () {
+                          bool isPass = true;
+                          info = Map<String, String>();
+                          controllers.forEach((label, controller) {
+                            if (controller.text.isEmpty) {
+                              isPass = false;
+                              setState(() {
+                                _isSubmit = true;
+                              });
+                            }
+                            if (label == 'Faculty/Major') {
+                              info['Major'] = controller.text;
+                            } else if (label == 'Tel.') {
+                              info['Tel'] = controller.text;
+                            } else {
+                              info[label] = controller.text;
+                            }
+                          });
 
-                      if (isPass) {
-                        info['Company'] = _selectedCompany;
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AssesmentTest(
-                                  position: _selectedPosition,
-                                  info: info,
-                                  image: image,
-                                  transcript: transcript)),
-                        );
-                      }
-                    })
+                          if (isPass) {
+                            info['Company'] = _selectedCompany;
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AssesmentTest(
+                                      position: _selectedPosition,
+                                      info: info,
+                                      image: image,
+                                      transcript: transcript)),
+                            );
+                          }
+                        }),
+                RaisedButton(
+                  child: Text(
+                    'send e-mail',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  onPressed: () async {
+                    final MailOptions mailOptions = MailOptions(
+                      body:
+                          'Congratulation! our hiring team was positively excited to inform you that you have passed the qualifications of the job and position that you have applied for. The company will contact you once again for additional information.  Sincerely, Hiring team  ',
+                      subject: 'Congratulation on your application!',
+                      recipients: [info['E-mail']],
+                      isHTML: true,
+                    );
+
+                    await FlutterMailer.send(mailOptions);
+                  },
+                )
               ],
             )));
   }
