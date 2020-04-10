@@ -18,6 +18,7 @@ class _RegisterFormState extends State<RegisterForm> {
     if (info != null) {
       this.info = info;
       this.isDetail = true;
+      getProfile();
     }
   }
   bool isDetail = false;
@@ -67,14 +68,18 @@ class _RegisterFormState extends State<RegisterForm> {
         app: app, storageBucket: 'gs://senior-project-b93f1.appspot.com');
     final StorageReference storageReference =
         storage.ref().child(info['Name'] + info['Lastname']).child('profile');
-    urlProfileImage = await storageReference.getDownloadURL();
+    var tmpUrlProfileImage = await storageReference.getDownloadURL();
 
     final StorageReference storageReferenceTs = storage
         .ref()
         .child(info['Name'] + info['Lastname'])
         .child('transcript');
 
-    urlTrans = await storageReferenceTs.getDownloadURL();
+    var tmpUrlTrans = await storageReferenceTs.getDownloadURL();
+    setState(() {
+      urlProfileImage = tmpUrlProfileImage;
+      urlTrans = tmpUrlTrans;
+    });
   }
 
   String getInfo(String label) {
@@ -157,8 +162,16 @@ class _RegisterFormState extends State<RegisterForm> {
       });
     }
 
-    Widget profilePicture = image == null
+    Widget profilePicture = image != null || (isDetail && urlProfileImage != "")
         ? Center(
+            child: CircleAvatar(
+            maxRadius: 100,
+            minRadius: 100,
+            backgroundImage: isDetail
+                ? NetworkImage(urlProfileImage)
+                : ExactAssetImage(image.path),
+          ))
+        : Center(
             child: CircleAvatar(
               maxRadius: 100,
               minRadius: 100,
@@ -168,20 +181,19 @@ class _RegisterFormState extends State<RegisterForm> {
                 onPressed: isDetail ? null : () => getImage(),
               ),
             ),
-          )
-        : Center(
-            child: CircleAvatar(
-            maxRadius: 100,
-            minRadius: 100,
-            backgroundImage: isDetail
-                ? Image.network(urlProfileImage)
-                : ExactAssetImage(image.path),
-          ));
+          );
 
     Widget AttachText() {
       return transcript != null
           ? Text('Attached', style: textStyle)
           : Text("Transcript", style: textStyle);
+    }
+
+    void showTranscript() async {
+      await showDialog(
+        context: context,
+        builder: (_) => ImageDialog(src: urlTrans,)
+      );
     }
 
     return Scaffold(
@@ -230,7 +242,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       RaisedButton(
                         child:
                             isDetail ? Text('Transcript') : Text('Attach here'),
-                        onPressed: isDetail ? null : () => getTranscript(),
+                        onPressed: isDetail ? () => showTranscript() : () => getTranscript(),
                       ),
                       SizedBox(
                         width: 20,
@@ -311,24 +323,47 @@ class _RegisterFormState extends State<RegisterForm> {
                             );
                           }
                         }),
-                RaisedButton(
-                  child: Text(
-                    'send e-mail',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  onPressed: () async {
-                    final MailOptions mailOptions = MailOptions(
-                      body:
-                          'Congratulation! our hiring team was positively excited to inform you that you have passed the qualifications of the job and position that you have applied for. The company will contact you once again for additional information.  Sincerely, Hiring team  ',
-                      subject: 'Congratulation on your application!',
-                      recipients: [info['E-mail']],
-                      isHTML: true,
-                    );
+                !isDetail
+                    ? SizedBox()
+                    : RaisedButton(
+                        child: Text(
+                          'send e-mail',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        onPressed: () async {
+                          final MailOptions mailOptions = MailOptions(
+                            body:
+                                'Congratulation! our hiring team was positively excited to inform you that you have passed the qualifications of the job and position that you have applied for. The company will contact you once again for additional information.  Sincerely, Hiring team  ',
+                            subject: 'Congratulation on your application!',
+                            recipients: [info['E-mail']],
+                            isHTML: true,
+                          );
 
-                    await FlutterMailer.send(mailOptions);
-                  },
-                )
+                          await FlutterMailer.send(mailOptions);
+                        },
+                      )
               ],
             )));
+  }
+}
+
+class ImageDialog extends StatelessWidget {
+  final String src;
+  ImageDialog({this.src});
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Container(
+        width: 400,
+        height: 600,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage(src),
+            fit: BoxFit.cover
+          )
+        ),
+      ),
+    );
   }
 }

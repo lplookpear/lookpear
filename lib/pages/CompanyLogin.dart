@@ -27,7 +27,7 @@ class _CompanyLoginState extends State<CompanyLogin> {
       var pass = userFound['Password'];
       if (pass == pwd) {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Successful()));
+            context, MaterialPageRoute(builder: (context) => Successful(company: userFound['Company'])));
       } else {
         _showDialog();
       }
