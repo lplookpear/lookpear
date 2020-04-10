@@ -191,9 +191,10 @@ class _RegisterFormState extends State<RegisterForm> {
 
     void showTranscript() async {
       await showDialog(
-        context: context,
-        builder: (_) => ImageDialog(src: urlTrans,)
-      );
+          context: context,
+          builder: (_) => ImageDialog(
+                src: urlTrans,
+              ));
     }
 
     return Scaffold(
@@ -242,7 +243,9 @@ class _RegisterFormState extends State<RegisterForm> {
                       RaisedButton(
                         child:
                             isDetail ? Text('Transcript') : Text('Attach here'),
-                        onPressed: isDetail ? () => showTranscript() : () => getTranscript(),
+                        onPressed: isDetail
+                            ? () => showTranscript()
+                            : () => getTranscript(),
                       ),
                       SizedBox(
                         width: 20,
@@ -312,6 +315,7 @@ class _RegisterFormState extends State<RegisterForm> {
 
                           if (isPass) {
                             info['Company'] = _selectedCompany;
+                            info['Position'] = _selectedPosition;
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -358,11 +362,8 @@ class ImageDialog extends StatelessWidget {
         width: 400,
         height: 600,
         decoration: BoxDecoration(
-          image: DecorationImage(
-            image: NetworkImage(src),
-            fit: BoxFit.cover
-          )
-        ),
+            image:
+                DecorationImage(image: NetworkImage(src), fit: BoxFit.cover)),
       ),
     );
   }

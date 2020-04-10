@@ -538,6 +538,71 @@ Map<String, Map<int, QuestionData>> questionList = {
 };
 
 var answer = {
-  'Electrical engineer': {1: 'Z', 2: 'X'},
-  'Suspension and steering': {1: 'Y'}
+  'Electrical engineer': {
+    1: 'b',
+    2: 'd',
+    3: 'd',
+    4: 'b',
+    5: 'c',
+    6: 'c',
+    7: 'c',
+    8: 'c',
+    9: 'b',
+    10: 'b',
+    11: 'c',
+    12: 'd',
+    13: 'c'
+  },
+  'Suspension and steering': {
+    1: 'c',
+    2: 'b',
+    3: 'a',
+    4: 'b',
+    5: 'a',
+    6: 'a',
+    7: 'c',
+    8: 'c',
+    9: 'c',
+    10: 'c',
+    11: 'b',
+    12: 'd',
+    13: 'b',
+    14: 'a',
+    15: 'c'
+  },
+  'Enigne repair': {
+    1: 'd',
+    2: 'c',
+    3: 'd',
+    4: 'c',
+    5: 'c',
+    6: 'a',
+    7: 'a',
+    8: 'c',
+    9: 'c',
+    10: 'a',
+    11: 'c',
+    12: 'c',
+    13: 'a',
+    14: 'b',
+    15: 'd',
+    16: 'd',
+  },
+  'Technician': {
+    1: 'b',
+    2: 'a',
+    3: 'd',
+    4: 'c',
+    5: 'c',
+    6: 'd',
+    7: 'b',
+    8: 'd',
+    9: 'b',
+    10: 'd',
+    11: 'd',
+    12: 'd',
+    13: 'b',
+    14: 'a',
+    15: 'a'
+  }
 };
