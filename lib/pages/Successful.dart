@@ -14,7 +14,7 @@ class Successful extends StatefulWidget {
 class _SuccessfulState extends State<Successful> {
   String company;
   _SuccessfulState({this.company}) {
-    //getSuccessfulList();
+    getSuccessfulList();
   }
   Map<String, dynamic> data = {
     'hhihi': {
@@ -82,7 +82,7 @@ class _SuccessfulState extends State<Successful> {
     final FirebaseDatabase database = FirebaseDatabase(app: app);
     var companyList = company.split(',');
     Map<String, dynamic> registerList = new Map<String, dynamic>();
-    //for (var comName in companyList) {
+    // for (var comName in companyList) {
     //   var ref = database.reference().child(comName);
     //   var register = await ref.once().then((value) => value.value);
     //   if (register != null) {
@@ -95,12 +95,18 @@ class _SuccessfulState extends State<Successful> {
       int totalcorrectanswer = 0;
       var position = data[key]['info']['Position'];
       for (var questionnumber in data[key]['answer'].keys) {
-        if (data[key]['answer'][questionnumber].toLowerCase() ==
-            Constants.answer[position][questionnumber].toLowerCase()) {
+        String registerAnswer =
+            data[key]['answer'][questionnumber].toLowerCase();
+        String correctAnswer =
+            Constants.answer[position][questionnumber].toLowerCase();
+        if (registerAnswer == correctAnswer) {
           totalcorrectanswer++;
         }
       }
-      if (Constants.answer[position].length / (100 * totalcorrectanswer) > 80) {
+      debugPrint('total = $totalcorrectanswer');
+      var persen = (100 * totalcorrectanswer) / Constants.answer[position].length;
+      debugPrint('persen = $persen');
+      if (persen > 80) {
         registerList[key] = data[key];
       }
     }
