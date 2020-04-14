@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
 import '../constants.dart' as Constants;
+import '../main.dart';
 
 class AssesmentTest extends StatefulWidget {
   AssesmentTest({this.position, this.info, this.image, this.transcript});
@@ -58,6 +59,7 @@ class _AssesmentTestState extends State<AssesmentTest> {
         .child('transcript');
     StorageUploadTask uploadTaskTs = storageReferenceTs.putFile(transcript);
     await uploadTaskTs.onComplete;
+    _showDialog();
   }
 
   Widget question(QuestionData questionData, int questionNumber) {
@@ -71,7 +73,7 @@ class _AssesmentTestState extends State<AssesmentTest> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('$title', style: TextStyle(fontSize: 17)),
+            Text('$questionNumber. $title', style: TextStyle(fontSize: 17)),
             RadioListTile(
               title: Text('$choiseA'),
               value: 'A',
@@ -151,6 +153,27 @@ class _AssesmentTestState extends State<AssesmentTest> {
     );
   }
 
+  void _showDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text("Finish"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Go to first page"),
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => MyHomePage()));
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -159,7 +182,9 @@ class _AssesmentTestState extends State<AssesmentTest> {
           // the App.build method, and use it to set our appbar title.
           title: Text('Assesment Test'),
         ),
-        body: question(_questionData[_questionNumber], _questionNumber));
+        body: Container(
+            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            child: question(_questionData[_questionNumber], _questionNumber)));
   }
 }
 

@@ -16,58 +16,8 @@ class _SuccessfulState extends State<Successful> {
   _SuccessfulState({this.company}) {
     getSuccessfulList();
   }
-  Map<String, dynamic> data = {
-    'hhihi': {
-      'answer': {
-        1: 'b',
-        2: 'd',
-        3: 'd',
-        4: 'b',
-        5: 'c',
-        6: 'c',
-        7: 'c',
-        8: 'c',
-        9: 'b',
-        10: 'b',
-        11: 'c',
-        12: 'd',
-        13: 'c'
-      },
-      'info': {
-        'Name': 'SAMSAK',
-        'Lastname': 'SUMSUM',
-        'E-mail': 'erefef@test.com',
-        'Tel': '0987654321',
-        'Position': 'Electrical engineer'
-      }
-    },
-    '222222': {
-      'answer': {
-        1: 'b',
-        2: 'b',
-        3: 'b',
-        4: 'b',
-        5: 'b',
-        6: 'b',
-        7: 'b',
-        8: 'c',
-        9: 'c',
-        10: 'c',
-        11: 'b',
-        12: 'd',
-        13: 'b',
-        14: 'a',
-        15: 'c'
-      },
-      'info': {
-        'Name': 'SOMCHAI',
-        'Lastname': 'SOOM',
-        'E-mail': 'erefef@mail.com',
-        'Tel': '0987654321',
-        'Position': 'Suspension and steering'
-      }
-    }
-  };
+  Map<String, dynamic> data = new Map<String, dynamic>();
+
   Future getSuccessfulList() async {
     final FirebaseApp app = await FirebaseApp.configure(
       name: 'test',
@@ -82,36 +32,46 @@ class _SuccessfulState extends State<Successful> {
     final FirebaseDatabase database = FirebaseDatabase(app: app);
     var companyList = company.split(',');
     Map<String, dynamic> registerList = new Map<String, dynamic>();
-    // for (var comName in companyList) {
-    //   var ref = database.reference().child(comName);
-    //   var register = await ref.once().then((value) => value.value);
-    //   if (register != null) {
-    //     for (var key in register.keys) {
-    //       registerList[key] = register[key];
-    //     }
-    //   }
-    // }
+    for (var comName in companyList) {
+      var ref = database.reference().child(comName);
+      var register = await ref.once().then((value) => value.value);
+      if (register != null) {
+        for (var key in register.keys) {
+          registerList[key] = register[key];
+        }
+      }
+    }
+    var data = registerList;
+    Map<String, dynamic> passList = new Map<String, dynamic>();
     for (var key in data.keys) {
       int totalcorrectanswer = 0;
       var position = data[key]['info']['Position'];
-      for (var questionnumber in data[key]['answer'].keys) {
-        String registerAnswer =
-            data[key]['answer'][questionnumber].toLowerCase();
-        String correctAnswer =
-            Constants.answer[position][questionnumber].toLowerCase();
-        if (registerAnswer == correctAnswer) {
-          totalcorrectanswer++;
+      int questionNumber = 0;
+      for (var answer in data[key]['answer']) {
+        // String registerAnswer =
+        //     data[key]['answer'][questionnumber].toLowerCase();
+        if (questionNumber == 0) {
+        } else {
+          String correctAnswer =
+              Constants.answer[position][questionNumber].toLowerCase();
+
+          if (answer.toLowerCase() == correctAnswer) {
+            totalcorrectanswer++;
+          }
         }
+
+        questionNumber++;
       }
       debugPrint('total = $totalcorrectanswer');
-      var persen = (100 * totalcorrectanswer) / Constants.answer[position].length;
+      var persen =
+          (100 * totalcorrectanswer) / Constants.answer[position].length;
       debugPrint('persen = $persen');
       if (persen > 80) {
-        registerList[key] = data[key];
+        passList[key] = data[key];
       }
     }
     setState(() {
-      data = registerList;
+      this.data = passList;
     });
   }
 
